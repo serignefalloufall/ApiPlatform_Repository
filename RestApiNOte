@@ -1,0 +1,26 @@
+/api/test
+
+Serialisation des donnee consite a transformer les infos requiperer au niveau de notre base de donne sous forme de json ou xml
+La normalisation consiste a transformer des donne complex(object) en tableau assosiatif simples
+Donc en symf c qui nous permet de faire la normalisation c : NormalizerInterface
+======================================
+
+ $tests = $testRepository->findAll();
+
+        //$testNormalises = $normalizer->normalize($tests, null, ['groups'=>'test:read']);
+
+        //json_encode permet de transformer un tableau ou un objet en json
+
+        //$json = json_encode($testNormalises);
+
+        //$json = $serializer->serialize($tests, 'json', ['groups'=>'test:read']);
+
+        //pour dire que la repons a envoyer au client c du json
+        // $respons = new Response($json, 200, [
+        //     "Content-Type" => "application/json"
+        // ]);   
+        
+        //$response = new JsonResponse($json, 200, [], true);
+        $response = $this->json($tests, 200, [], ['groups'=>'test:read']);
+
+        return $response;
