@@ -4,9 +4,14 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"test:read"}},
+ * collectionOperations={"get"}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\OperationRepository")
  */
 class Operation
@@ -15,6 +20,7 @@ class Operation
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"test:read"})
      */
     private $id;
 
@@ -30,11 +36,13 @@ class Operation
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @Groups({"test:read"})
      */
     private $montant;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"test:read"})
      */
     private $dateoperation;
 

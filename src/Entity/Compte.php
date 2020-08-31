@@ -3,12 +3,20 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
- * @ApiResource()
+* @ApiResource(
+ * normalizationContext={"groups"={"test:read"}},
+ * collectionOperations={"get"})
+ * @ApiFilter(SearchFilter::class, properties={"numcompte": "exact"})
  * @ORM\Entity(repositoryClass="App\Repository\CompteRepository")
  */
 class Compte
@@ -17,26 +25,32 @@ class Compte
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"test:read"})
+
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Typecompte", inversedBy="comptes")
+     * @Groups({"test:read"})
      */
     private $compte;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="comptes")
+     * @Groups({"test:read"})
      */
     private $client;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"test:read"})
      */
     private $numcompte;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"test:read"})
      */
     private $clerib;
 
@@ -62,6 +76,7 @@ class Compte
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Operation", mappedBy="compte")
+     * @Groups({"test:read"})
      */
     private $operations;
 
